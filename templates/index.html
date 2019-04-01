@@ -1,0 +1,131 @@
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAAS || Student Monitering Program</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script></script>
+
+    <style media="screen">
+        .counter {
+            margin-top: 10px;
+        }
+        .stu_name{
+            font-size:2em;
+        }
+/*tablets */
+
+@media (max-width: 768px){
+
+    .display-4{
+        font-size: 1em !important;
+    }
+    .stu_name{
+            font-size:1em;
+        }
+}
+
+
+    </style>
+     <script src="js/axios.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light" style="
+    text-align: center;
+">
+        <a class="navbar-brand" href="#" style="
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+">
+            <!-- <img src="" width="100px" class="d-inline-block align-top" alt=""> -->
+
+
+        </a>
+    </nav>
+    <div class="container" style="text-align:center;">
+        <h3 class="display-4">Welcome To LAAS || Student Monitering</h3>
+        <div class="counter">
+        </div>
+    </div>
+    <!-- Form -->
+
+    <hr>
+
+
+    <div class="container" style="
+    background: #f8f9fa;
+">
+
+        <div class="row">
+            <div class="col-lg-4 col-sm-12 col-xs-12">
+
+                <p style="margin:25px 0 10px 0;">Camera Feed</p>
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <img src="{{ url_for('video_feed') }}" alt="" style="width: 100%">
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-8 col-sm-12 col-xs-12">
+
+                <p style="margin:25px 0 10px 0;">Students Screen Feed</p>
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <img id="screen" alt="" style="width: 100%;">
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+    <hr>
+
+
+
+
+    <script type="text/javascript">
+   
+        /*
+        function get_screen(){
+            const url = "/screen.png?random=" + new Date().getTime();
+           document.getElementById("screen").src = url;
+        }
+        
+        setInterval(get_screen,500);
+        */
+        
+               const fileReader = new FileReader()
+
+        function fetchImage() {
+            new Promise((res, rej) => {
+                const url = "/screen.png?random=" + new Date().getTime();
+                axios.get(url, {
+                        responseType: 'blob'
+                    })
+                    .then(function(response) {
+                        document.images["screen"].src = URL.createObjectURL(response.data)
+                        res(fetchImage())
+                    })
+                    .catch(function(error) {
+                        console.log(error)
+                    })
+            })
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchImage)
+
+    </script>
+</body>
+
+</html>
